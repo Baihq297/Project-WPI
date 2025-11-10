@@ -1,0 +1,233 @@
+  /* @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+
+  body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #FFF8E1;
+    color: #333;
+  }
+
+  /* ✨ Navbar dasar */
+  /* #mainNavbar {
+    transition: all 0.5s ease-in-out;
+    background-color: transparent !important;
+    box-shadow: none;
+  } */
+
+  /* ✨ Saat scroll ke bawah: solid + shadow */
+  /* #mainNavbar.nav-scroll {
+    background-color: rgba(0, 0, 0, 0.9) !important;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+  } */
+
+  /* ✨ Saat scroll ke bawah terus → navbar hilang */
+  /* #mainNavbar.nav-hide {
+    transform: translateY(-100%);
+    transition: transform 0.4s ease-in-out;
+  }
+
+  /* ✨ Warna link default */
+  /* #mainNavbar .nav-link {
+    color: #fff !important;
+    position: relative;
+    transition: all 0.3s ease;
+  } */
+
+  /* #mainNavbar .nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0%;
+    height: 2px;
+    background-color: #FFD700;
+    transform: translateX(-50%);
+    transition: all 0.3s ease-in-out;
+  } */ */
+
+  /* #mainNavbar .nav-link:hover::after {
+    width: 50%;
+  }
+  🔹 Sembunyikan menu tengah hanya di HP */
+  /* @media (max-width: 991px) {
+    .navbar-nav.d-lg-flex {
+      display: none !important;
+    }
+    #menuToggle {
+      display: block !important;
+    }
+  } */
+
+  /* ✨ Saat navbar muncul (scroll), hover kuning */
+  /* #mainNavbar.nav-scroll .nav-link:hover {
+    color: #FFD700 !important;
+  } */
+
+  /* Overlay Menu Mobile */
+  /* .overlay-menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100%;
+    background: rgba(255,255,255,0.95);
+    backdrop-filter: blur(10px);
+    z-index: 2000;
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    animation: fadeIn 0.4s ease;
+  }
+
+  .overlay-menu.active {
+    display: flex;
+  }
+
+  .overlay-nav li {
+    margin: 15px 0;
+  }
+
+  .overlay-link {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #007bff;
+    text-decoration: none;
+    transition: 0.3s;
+  }
+
+  .overlay-link:hover {
+    color: #C62828;
+  }
+
+  .close-btn {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    font-size: 2rem;
+    color: #333;
+    background: none;
+    border: none;
+    cursor: pointer;
+  } */
+
+  /* Animasi */
+  /* @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  /* Sembunyikan menu toggle di desktop */
+  /* #menuToggle {
+    display: none;
+  }
+
+  @media (max-width: 991px) {
+    #menuToggle {
+      display: block;
+    }
+    .navbar .collapse,
+    .navbar-brand {
+      display: none !important;
+    }
+  }
+
+  .hero {
+    background: linear-gradient(rgba(198,40,40,0.7), rgba(198,40,40,0.7)), 
+                url('../img/banner.jpg') center/cover;
+    color: white;
+    padding: 100px 20px;
+    text-align: center;
+  }
+
+  .hero h1 {
+    font-weight: 700;
+    font-size: 3rem;
+  }
+
+  .card {
+    border: none;
+    border-radius: 15px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+  }
+
+  footer {
+    background-color: #C62828;
+    color: white;
+    padding: 15px 0;
+  }
+  .card {
+    border-radius: 15px;
+  }
+  h4, h5 {
+    font-weight: bold;
+  }
+  .text-danger {
+    color: #C62828 !important;
+  }
+  .btn-outline-light:hover {
+    background-color: white !important;
+    color: #C62828 !important;
+    transition: 0.2s;
+  }
+  .nav-tabs .nav-link {
+    border: none;
+    color: #555;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+  }
+  .nav-tabs .nav-link.active {
+    background-color: #dc3545;
+    color: #fff !important;
+    border-radius: 10px;
+  } */ */ 
+
+
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+}
+
+.hero {
+  color: white;
+  text-shadow: 0 2px 5px rgba(0,0,0,0.5);
+}
+
+.text-shadow {
+  text-shadow: 2px 2px 8px rgba(0,0,0,0.7);
+}
+
+.navbar {
+  transition: background 0.3s ease;
+}
+.text-shadow {
+  text-shadow: 2px 2px 8px rgba(0,0,0,0.7);
+}
+
+.hero {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.nav-link {
+  transition: color 0.3s;
+}
+.nav-link:hover {
+  color: #ffc107 !important;
+}
+.hero {
+  height: 100vh;
+  background: url('assets/img/banner.jpeg') center/cover no-repeat;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  text-shadow: 2px 2px 8px rgba(0,0,0,0.7);
+}
