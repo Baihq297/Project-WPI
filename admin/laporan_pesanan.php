@@ -1,15 +1,35 @@
 <?php
+// PASTIKAN TIDAK ADA SPASI, TAB, ATAU BARIS KOSONG SEBELUM BARIS INI.
 session_start();
 include "../api/koneksi.php";
 
 if (!isset($_SESSION['pelanggan']) || $_SESSION['pelanggan']['role'] !== 'admin') {
-  header("Location: ../index.php?login_required=1");
-  exit;
+    header("Location: ../index.php?login_required=1");
+    exit;
 }
 
 $notif_msg = $_SESSION['notif'] ?? null;
 $notif_type = $_SESSION['notif_type'] ?? 'success';
 unset($_SESSION['notif'], $_SESSION['notif_type']);
+
+// --- LOGIKA FILTER TANGGAL BARU ---
+$tgl1 = $_GET['tgl_mulai'] ?? null;
+$tgl2 = $_GET['tgl_selesai'] ?? null;
+
+$params = [];
+$types = "";
+$where_clause = "";
+
+if (!empty($tgl1) && !empty($tgl2)) {
+    // Pastikan format tanggal aman untuk SQL (YYYY-MM-DD)
+    $tgl_mulai_sql = date('Y-m-d', strtotime($tgl1));
+    $tgl_selesai_sql = date('Y-m-d', strtotime($tgl2));
+    
+    $where_clause = "WHERE DATE(p.created_at) BETWEEN ? AND ?";
+    $params = [$tgl_mulai_sql, $tgl_selesai_sql];
+    $types = "ss";
+}
+// --- AKHIR LOGIKA FILTER TANGGAL BARU ---
 ?>
 <!DOCTYPE html>
 <html lang="id">
@@ -81,9 +101,9 @@ unset($_SESSION['notif'], $_SESSION['notif_type']);
     
     <div class="mb-3">
       <form method="get" class="d-flex flex-wrap gap-2 align-items-center">
-        <input type="date" name="tgl_mulai" class="form-control" value="<?= $_GET['tgl_mulai'] ?? '' ?>" style="max-width: 200px;">
-        <input type="date" name="tgl_selesai" class="form-control" value="<?= $_GET['tgl_selesai'] ?? '' ?>" style="max-width: 200px;">
-        <button class="btn btn-danger" name="filter"><i class="bi bi-funnel"></i> Filter</button>
+            <input type="date" name="tgl_mulai" class="form-control me-2" value="<?= htmlspecialchars($tgl1 ?? '') ?>" style="max-width: 200px;">
+            <input type="date" name="tgl_selesai" class="form-control me-2" value="<?= htmlspecialchars($tgl2 ?? '') ?>" style="max-width: 200px;">
+        <button class="btn btn-danger" name="filter" value="1"><i class="bi bi-funnel"></i> Filter</button>
         <a href="laporan_pesanan.php" class="btn btn-secondary"><i class="bi bi-x-circle"></i> Reset</a>
       </form>
     </div>
@@ -107,24 +127,31 @@ unset($_SESSION['notif'], $_SESSION['notif_type']);
         </thead>
         <tbody>
           <?php
-          $where = "";
-          if (isset($_GET['filter']) && !empty($_GET['tgl_mulai']) && !empty($_GET['tgl_selesai'])) {
-            $tgl1 = mysqli_real_escape_string($conn, $_GET['tgl_mulai']);
-            $tgl2 = mysqli_real_escape_string($conn, $_GET['tgl_selesai']);
-            $where = "WHERE DATE(p.created_at) BETWEEN '$tgl1' AND '$tgl2'";
-          }
-          $query = "
-            SELECT 
-                p.id_pesanan, p.total, p.status, p.created_at, p.payment_method,
-                pel.nama AS nama_pelanggan
-            FROM pesanan p
-            JOIN pelanggan pel ON p.id_pelanggan = pel.id_pelanggan
-            $where
-            ORDER BY p.id_pesanan DESC
-          ";
-          $res = mysqli_query($conn, $query);
           
+          $query = "
+              SELECT 
+                  p.id_pesanan, p.total, p.status, p.created_at, p.payment_method,
+                  pel.nama AS nama_pelanggan
+              FROM pesanan p
+              JOIN pelanggan pel ON p.id_pelanggan = pel.id_pelanggan
+              {$where_clause}
+              ORDER BY p.id_pesanan DESC
+          ";
+          
+          $stmt = mysqli_prepare($conn, $query);
+          
+          // Bind parameter jika ada filter
+          if ($types) {
+              // Penggunaan '...' (splat operator) memerlukan PHP 5.6+
+              // Jika menggunakan PHP lama, harus pakai call_user_func_array
+              mysqli_stmt_bind_param($stmt, $types, ...$params);
+          }
+          
+          mysqli_stmt_execute($stmt);
+          $res = mysqli_stmt_get_result($stmt);
+
           if (!$res) {
+              // Diubah colspan menjadi 7 (sesuai kolom)
               echo "<tr><td colspan='7' class='text-danger'>Error: " . mysqli_error($conn) . "</td></tr>";
           } elseif (mysqli_num_rows($res) === 0) {
               echo "<tr><td colspan='7' class='text-muted'>Tidak ada data pesanan ditemukan.</td></tr>";
@@ -136,6 +163,7 @@ unset($_SESSION['notif'], $_SESSION['notif_type']);
                       case 'selesai': $badge_class = 'bg-success'; break;
                       case 'diproses': $badge_class = 'bg-warning text-dark'; break;
                       case 'dikirim': $badge_class = 'bg-info text-dark'; break;
+                      default: $badge_class = 'bg-secondary';
                   }
                   echo "
                     <tr>
@@ -160,6 +188,7 @@ unset($_SESSION['notif'], $_SESSION['notif_type']);
                     </tr>
                   ";
               }
+              mysqli_stmt_close($stmt);
           }
           ?>
         </tbody>
@@ -225,7 +254,6 @@ function showToast(message, isError = false) {
 }
 
 $(document).ready(function() {
-  // (Notifikasi Session dan Konfirmasi Hapus tidak berubah)
   <?php if ($notif_msg): ?>
     showToast(<?= json_encode($notif_msg) ?>, <?= $notif_type === 'error' ? 'true' : 'false' ?>);
   <?php endif; ?>
@@ -248,31 +276,21 @@ $(document).ready(function() {
       });
   });
 
-  // 
-  // ============================================
-  //  PERBAIKAN 3: JavaScript untuk Modal (Diperbarui)
-  // ============================================
-  //
   const statusModal = new bootstrap.Modal(document.getElementById('statusModal'));
   const modalDetailsBody = $('#modal_order_details'); // Cache selector
   
-  // 1. Saat tombol edit diklik
   $('.btn-edit-status').on('click', function() {
       const orderId = $(this).data('order-id');
       const currentStatus = $(this).data('current-status');
       
-      // Isi form di dalam modal (kode lama)
       $('#statusModalTitle').text('Ubah Status Pesanan #' + orderId);
       $('#modal_id_pesanan').val(orderId);
       $('#modal_status').val(currentStatus);
 
-      // --- INI BAGIAN BARU ---
-      // 1. Set loading state
       modalDetailsBody.html('<p class="text-muted text-center"><i class="bi bi-arrow-clockwise"></i> Memuat detail...</p>');
 
-      // 2. Ambil data detail via AJAX
       $.ajax({
-          url: '../api/get_order_details.php', // Panggil API baru
+          url: '../api/get_order_details.php',
           method: 'GET',
           data: { id_pesanan: orderId },
           dataType: 'json',
@@ -292,21 +310,19 @@ $(document).ready(function() {
                       </li>`;
                   });
                   html += '</ul>';
-                  modalDetailsBody.html(html); // Masukkan daftar item
-              } else if (res.items.length === 0) {
+                  modalDetailsBody.html(html);
+              } else if (res.items && res.items.length === 0) {
                   modalDetailsBody.html('<p class="text-danger text-center">Tidak ada detail item untuk pesanan ini.</p>');
               } else {
-                   modalDetailsBody.html(`<p class="text-danger text-center">Gagal memuat detail: ${res.message}</p>`);
+                  modalDetailsBody.html(`<p class="text-danger text-center">Gagal memuat detail: ${res.message || 'Unknown'}</p>`);
               }
           },
           error: function() {
               modalDetailsBody.html('<p class="text-danger text-center">Gagal terhubung ke server.</p>');
           }
       });
-      // --- AKHIR BAGIAN BARU ---
   });
   
-  // 2. Saat tombol "Simpan Perubahan" di modal diklik (AJAX)
   $('#saveStatusButton').on('click', function() {
       const form = $('#statusForm');
       const button = $(this);
