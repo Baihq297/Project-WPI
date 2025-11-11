@@ -5,17 +5,17 @@ header('Content-Type: application/json');
 
 // 1. Cek Admin
 if (!isset($_SESSION['pelanggan']) || $_SESSION['pelanggan']['role'] !== 'admin') {
-  echo json_encode(['success' => false, 'message' => 'Akses ditolak']);
-  exit;
+    echo json_encode(['success' => false, 'message' => 'Akses ditolak']);
+    exit;
 }
 
-// 2. Ambil Data dari POST (FormData)
+// 2. Ambil Data dari POST
 $id_menu = intval($_POST['id_menu']);
 $nama = trim($_POST['nama_menu']);
 $harga = intval($_POST['harga']);
 $kategori = $_POST['kategori'];
 $stok = intval($_POST['stok']);
-$status_input = isset($_POST['status']) ? 'tersedia' : 'habis';
+$status_input_fe = isset($_POST['status']) ? $_POST['status'] : 'habis';
 
 // 3. Validasi
 if ($id_menu <= 0 || empty($nama) || $harga <= 0) {
@@ -35,14 +35,13 @@ if (mysqli_num_rows($res_cek) > 0) {
 }
 mysqli_stmt_close($stmt_cek);
 
-// 5. Logika Stok dan Status
-if ($status_input === 'tersedia' && $stok <= 0) {
-    $status_final = 'habis';
-} else {
-    $status_final = $status_input;
+// 5. Logika Status
+$status_final_db = ($status_input_fe === 'tersedia') ? 'aktif' : 'nonaktif';
+if ($status_final_db === 'aktif' && $stok <= 0) {
+    $status_final_db = 'nonaktif';
 }
 
-// 6. Ambil nama gambar lama dari DB
+// 6. Ambil gambar lama
 $stmt_old = mysqli_prepare($conn, "SELECT gambar FROM menu WHERE id_menu = ?");
 mysqli_stmt_bind_param($stmt_old, "i", $id_menu);
 mysqli_stmt_execute($stmt_old);
@@ -50,34 +49,35 @@ $result_old = mysqli_stmt_get_result($stmt_old);
 $row_old = mysqli_fetch_assoc($result_old);
 
 if (!$row_old) {
-    echo json_encode(['success' => false, 'message' => 'Error: Menu ID tidak ditemukan.']);
+    echo json_encode(['success' => false, 'message' => 'Menu tidak ditemukan.']);
     mysqli_stmt_close($stmt_old);
     exit;
 }
 $gambar_final = $row_old['gambar'];
 mysqli_stmt_close($stmt_old);
 
-
-// 7. Cek jika ada gambar BARU yang di-upload
+// 7. Cek Upload Gambar Baru
 if (!empty($_FILES['gambar']['name'])) {
-    $gambar_baru = $_FILES['gambar']['name'];
-    $targetDir = '../assets/img/';
-    $targetFile = $targetDir . basename($gambar_baru);
-    
-    if (move_uploaded_file($_FILES['gambar']['tmp_name'], $targetFile)) {
-        $gambar_final = basename($gambar_baru); 
+    $filename = basename($_FILES['gambar']['name']);
+    $target = "../assets/img/" . $filename;
+
+    if (move_uploaded_file($_FILES['gambar']['tmp_name'], $target)) {
+        $gambar_final = $filename;
+    } else {
+        echo json_encode(['success' => false, 'message' => 'Gagal upload gambar baru.']);
+        exit;
     }
 }
 
 // 8. Update Database
 $stmt_update = mysqli_prepare($conn, "UPDATE menu SET nama_menu=?, harga=?, kategori=?, stok=?, status=?, gambar=? WHERE id_menu=?");
-mysqli_stmt_bind_param($stmt_update, "sisiisi", $nama, $harga, $kategori, $stok, $status_final, $gambar_final, $id_menu);
+mysqli_stmt_bind_param($stmt_update, "sisissi", $nama, $harga, $kategori, $stok, $status_final_db, $gambar_final, $id_menu);
 $ok = mysqli_stmt_execute($stmt_update);
 
 if ($ok) {
-  echo json_encode(['success' => true, 'message' => "Menu '$nama' berhasil diperbarui!"]);
+    echo json_encode(['success' => true, 'message' => "Menu '$nama' berhasil diperbarui!"]);
 } else {
-  echo json_encode(['success' => false, 'message' => 'Gagal update database: ' . mysqli_error($conn)]);
+    echo json_encode(['success' => false, 'message' => 'Gagal update database: ' . mysqli_error($conn)]);
 }
+
 mysqli_stmt_close($stmt_update);
-?>
