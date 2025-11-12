@@ -270,9 +270,9 @@ $link_kembali = "index.php?page=blog&hal=" . $halaman_kembali . "&kategori=" . $
 $komentar_mentah = [];
 
 if ($id > 0 && isset($conn)) {
-    // Ambil semua kolom yang relevan, termasuk parent_id dan role
+    // Ambil semua kolom yang relevan, termasuk parent_id, role, dan id_pelanggan
     $sql_komentar = "SELECT 
-                        c.id_komentar, c.parent_id, c.isi_komentar, c.tanggal_komentar,
+                        c.id_komentar, c.parent_id, c.isi_komentar, c.tanggal_komentar, c.id_pelanggan, 
                         IFNULL(p.nama, c.nama) AS nama_penulis, p.role
                      FROM komentar c
                      LEFT JOIN pelanggan p ON c.id_pelanggan = p.id_pelanggan
@@ -302,13 +302,13 @@ function buildCommentTree($comments) {
         $indexed[$comment['id_komentar']]['children'] = [];
     }
 
-    foreach ($indexed as $id => $comment) {
+    foreach ($indexed as $id_komentar => $comment) {
         // Hanya komentar dengan parent_id (balasan) yang harus dicari induknya
         if ($comment['parent_id'] !== NULL && isset($indexed[$comment['parent_id']])) {
-            $indexed[$comment['parent_id']]['children'][] = &$indexed[$id];
+            $indexed[$comment['parent_id']]['children'][] = &$indexed[$id_komentar];
         } else {
             // Komentar level tertinggi
-            $tree[] = &$indexed[$id];
+            $tree[] = &$indexed[$id_komentar];
         }
     }
     return $tree;
@@ -318,11 +318,14 @@ $komentar_list_berjenjang = buildCommentTree($komentar_mentah);
 $total_komentar = count($komentar_mentah);
 
 // === FUNGSI REKURSIF UNTUK MENAMPILKAN KOMENTAR ===
-function displayCommentsRecursive($comments, $is_admin, $id_post, $level = 0) {
+function displayCommentsRecursive($comments, $is_admin, $id_post, $id_pelanggan_aktif, $level = 0) {
     $html = '';
     
     foreach ($comments as $komen) {
         $is_author_admin = ($komen['role'] === 'admin');
+        // Pastikan c.id_pelanggan diambil dari query agar perbandingan ini valid.
+        $is_current_user_author = (isset($komen['id_pelanggan']) && $komen['id_pelanggan'] == $id_pelanggan_aktif);
+        $can_edit = $is_admin || $is_current_user_author; // Boleh edit jika admin ATAU dia penulisnya
         
         // Tentukan style untuk balasan (indentasi)
         $indent_style = $level > 0 ? 'ms-' . min(4, $level * 2) : ''; 
@@ -342,10 +345,21 @@ function displayCommentsRecursive($comments, $is_admin, $id_post, $level = 0) {
         }
         $html .= '</h6>';
         $html .= '<small class="text-muted">' . date('d F Y, H:i', strtotime($komen['tanggal_komentar'])) . '</small>';
-        $html .= '<p class="mt-1 mb-0">' . nl2br(htmlspecialchars($komen['isi_komentar'])) . '</p>';
+        
+        // Tambahkan ID unik ke paragraf komentar agar bisa diganti oleh JS
+        $html .= '<p class="mt-1 mb-0 comment-content-text" id="comment-text-' . $komen['id_komentar'] . '">' . nl2br(htmlspecialchars($komen['isi_komentar'])) . '</p>';
 
-        // Tombol Aksi (Balas & Hapus)
+        // Tombol Aksi (Balas, Edit & Hapus)
         $html .= '<small class="d-block mt-1">';
+        
+        // FITUR EDIT (UNTUK ADMIN DAN PENULIS)
+        if ($can_edit) {
+            // Konten komentar dienkode untuk diteruskan ke JS
+            $escaped_content = htmlspecialchars($komen['isi_komentar'], ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+            
+            $html .= '<a href="#" class="text-secondary fw-semibold me-3 edit-link" data-comment-id="' . $komen['id_komentar'] . '" data-comment-content="' . $escaped_content . '">';
+            $html .= '<i class="bi bi-pencil-square"></i> Edit</a>';
+        }
         
         // FITUR BALAS (HANYA UNTUK ADMIN)
         if ($is_admin) {
@@ -361,18 +375,24 @@ function displayCommentsRecursive($comments, $is_admin, $id_post, $level = 0) {
             $html .= '<i class="bi bi-trash"></i> Hapus (Moderasi)</a>';
         }
         $html .= '</small>';
+        
+        // Placeholder untuk Form Edit
+        if ($can_edit) {
+            $html .= '<div class="edit-form-container mt-2" id="edit-form-' . $komen['id_komentar'] . '"></div>';
+        }
 
         // Placeholder untuk Form Balasan (diisi oleh JS)
         if ($is_admin) {
              $html .= '<div class="reply-form-container mt-2" id="reply-form-' . $komen['id_komentar'] . '"></div>';
         }
 
+
         $html .= '</div>'; // Tutup div inner
         $html .= '</div>'; // Tutup d-flex
 
         // Tampilkan balasan (rekursi)
         if (!empty($komen['children'])) {
-            $html .= displayCommentsRecursive($komen['children'], $is_admin, $id_post, $level + 1);
+            $html .= displayCommentsRecursive($komen['children'], $is_admin, $id_post, $id_pelanggan_aktif, $level + 1);
         }
     }
     return $html;
@@ -409,7 +429,7 @@ function displayCommentsRecursive($comments, $is_admin, $id_post, $level = 0) {
                     <?php elseif ($is_logged_in): ?>
                         <p class="text-success fw-semibold">Anda berkomentar sebagai: <?= htmlspecialchars($nama_pelanggan) ?></p>
                         
-                        <form action="pages/proses_komentar.php" method="POST">
+                        <form action="pages/proses_komentar.php?action=add" method="POST">
                             <input type="hidden" name="id_post" value="<?= htmlspecialchars($id) ?>">
                             <input type="hidden" name="parent_id" value=""> <div class="mb-3">
                                 <label for="komentar" class="form-label">Komentar</label>
@@ -430,7 +450,7 @@ function displayCommentsRecursive($comments, $is_admin, $id_post, $level = 0) {
                 <?php if (empty($komentar_mentah)): ?>
                     <div class="alert alert-secondary text-center">Jadilah yang pertama berkomentar!</div>
                 <?php else: ?>
-                    <?= displayCommentsRecursive($komentar_list_berjenjang, $is_admin, $selected_post['id']) ?>
+                    <?= displayCommentsRecursive($komentar_list_berjenjang, $is_admin, $selected_post['id'], $id_pelanggan_aktif) ?>
                 <?php endif; ?>
             </div>
         </div>
@@ -468,37 +488,46 @@ body.has-fixed-navbar { padding-top: 70px; }
 </style>
 
 <script>
-    // === SCRIPT JAVASCRIPT UNTUK MENAMPILKAN FORM BALASAN ADMIN ===
+    // === SCRIPT JAVASCRIPT UNTUK MENAMPILKAN FORM BALASAN/EDIT KOMENTAR ===
     document.addEventListener('DOMContentLoaded', function() {
         const replyLinks = document.querySelectorAll('.reply-link');
+        const editLinks = document.querySelectorAll('.edit-link'); 
 
+        const currentPostId = <?= $selected_post['id'] ?>;
+        const adminName = "<?= htmlspecialchars($nama_pelanggan) ?>";
+        
+        // Fungsi untuk menutup semua form yang terbuka (edit dan balas)
+        function closeAllForms() {
+            document.querySelectorAll('.reply-form-container').forEach(container => container.innerHTML = '');
+            document.querySelectorAll('.edit-form-container').forEach(container => container.innerHTML = '');
+            // Tampilkan kembali semua teks komentar yang mungkin tersembunyi
+            document.querySelectorAll('.comment-content-text').forEach(text => text.style.display = 'block'); 
+        }
+
+        // --- Logika Tombol BALAS (REPLY) ---
         replyLinks.forEach(link => {
             link.addEventListener('click', function(e) {
                 e.preventDefault();
                 const commentId = this.getAttribute('data-comment-id');
                 const commentName = this.getAttribute('data-comment-name');
                 const formContainer = document.getElementById('reply-form-' + commentId);
-                const currentPostId = <?= $selected_post['id'] ?>;
-                const adminName = "<?= htmlspecialchars($nama_pelanggan) ?>";
 
-                // 1. Bersihkan semua form balasan yang mungkin terbuka
-                document.querySelectorAll('.reply-form-container').forEach(container => {
-                    if (container.id !== 'reply-form-' + commentId) {
-                        container.innerHTML = '';
-                    }
-                });
-                
+                // Tutup semua form lain, kecuali jika form ini sudah terbuka
+                if (formContainer.innerHTML === '') {
+                    closeAllForms();
+                }
+
                 // Jika form sudah terbuka, tutup
                 if (formContainer.innerHTML !== '') {
                     formContainer.innerHTML = '';
                     return;
                 }
 
-                // 2. Buat HTML form balasan
+                // Buat HTML form balasan
                 const replyFormHtml = `
                     <div class="card p-3 bg-light border-warning border-2">
                         <p class="text-muted small mb-2">Membalas <strong>@${commentName}</strong> sebagai ${adminName}</p>
-                        <form action="pages/proses_komentar.php" method="POST">
+                        <form action="pages/proses_komentar.php?action=reply" method="POST">
                             <input type="hidden" name="id_post" value="${currentPostId}">
                             <input type="hidden" name="parent_id" value="${commentId}">
                             
@@ -506,13 +535,61 @@ body.has-fixed-navbar { padding-top: 70px; }
                                 <textarea name="komentar" class="form-control" rows="2" placeholder="Balasan Anda untuk ${commentName}..." required></textarea>
                             </div>
                             <button type="submit" class="btn btn-sm btn-primary fw-semibold">Kirim Balasan</button>
-                            <button type="button" class="btn btn-sm btn-outline-secondary ms-2" onclick="document.getElementById('reply-form-${commentId}').innerHTML = ''">Batal</button>
+                            <button type="button" class="btn btn-sm btn-outline-secondary ms-2" onclick="document.getElementById('reply-form-${commentId}').innerHTML = ''; closeAllForms();">Batal</button>
                         </form>
                     </div>
                 `;
 
-                // 3. Masukkan form ke container
+                // Masukkan form ke container
                 formContainer.innerHTML = replyFormHtml;
+            });
+        });
+        
+        // --- Logika Tombol EDIT ---
+        editLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const commentId = this.getAttribute('data-comment-id');
+                // Decode konten, karena di PHP sudah di-encode dengan htmlspecialchars(..., ENT_QUOTES)
+                const commentContent = link.getAttribute('data-comment-content').replace(/&quot;/g, '"').replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>'); 
+                
+                const formContainer = document.getElementById('edit-form-' + commentId);
+                const textElement = document.getElementById('comment-text-' + commentId);
+
+                // Tutup semua form lain, kecuali jika form ini sudah terbuka
+                if (formContainer.innerHTML === '') {
+                    closeAllForms();
+                }
+
+                // Jika form sudah terbuka, tutup dan tampilkan kembali teks
+                if (formContainer.innerHTML !== '') {
+                    formContainer.innerHTML = '';
+                    textElement.style.display = 'block'; 
+                    return;
+                }
+                
+                // Sembunyikan teks komentar dan tampilkan form
+                textElement.style.display = 'none';
+
+                // Buat HTML form edit
+                const editFormHtml = `
+                    <div class="card p-3 bg-light border-secondary border-2">
+                        <p class="text-muted small mb-2">Edit Komentar</p>
+                        <form action="pages/proses_komentar.php?action=edit" method="POST">
+                            <input type="hidden" name="id_post" value="${currentPostId}">
+                            <input type="hidden" name="id_komentar" value="${commentId}">
+                            
+                            <div class="mb-3">
+                                <textarea name="komentar" class="form-control" rows="2" required>${commentContent}</textarea>
+                            </div>
+                            <button type="submit" class="btn btn-sm btn-success fw-semibold">Simpan Perubahan</button>
+                            <button type="button" class="btn btn-sm btn-outline-secondary ms-2" onclick="document.getElementById('edit-form-${commentId}').innerHTML = ''; document.getElementById('comment-text-${commentId}').style.display = 'block'; closeAllForms();">Batal</button>
+                        </form>
+                    </div>
+                `;
+
+                // Masukkan form ke container
+                formContainer.innerHTML = editFormHtml;
             });
         });
     });
