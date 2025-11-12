@@ -131,19 +131,18 @@ $posts = [
         "tanggal" => "28 September 2025",
         "kategori" => "Review",
         "konten" => "
-            
-            Pengalaman menyantap ayam goreng, terutama varian pedas, akan mencapai puncaknya dengan pendamping minuman yang tepat. Pilihan minuman yang cerdas tidak hanya menetralisir rasa pedas, tetapi juga membersihkan palet rasa, meningkatkan kenikmatan keseluruhan (*gastronomic experience*).
+        Pengalaman menyantap ayam goreng, terutama varian pedas, akan mencapai puncaknya dengan pendamping minuman yang tepat. Pilihan minuman yang cerdas tidak hanya menetralisir rasa pedas, tetapi juga membersihkan palet rasa, meningkatkan kenikmatan keseluruhan (*gastronomic experience*).
 
-            <h3>🥛 1. Susu (Dairy-Based Beverages): The Ultimate Capsaicin Neutralizer</h3>
-            Minuman berbasis susu adalah pilihan terbaik dari sudut pandang ilmiah. <strong>Lemak dan protein (kasein)</strong> yang terkandung dalam susu bekerja paling efektif dalam melarutkan dan menghilangkan molekul capsaicin (senyawa aktif pedas) dari reseptor lidah, meredakan sensasi terbakar secara cepat.
+        <h3>🥛 1. Susu (Dairy-Based Beverages): The Ultimate Capsaicin Neutralizer</h3>
+        Minuman berbasis susu adalah pilihan terbaik dari sudut pandang ilmiah. <strong>Lemak dan protein (kasein)</strong> yang terkandung dalam susu bekerja paling efektif dalam melarutkan dan menghilangkan molekul capsaicin (senyawa aktif pedas) dari reseptor lidah, meredakan sensasi terbakar secara cepat.
 
-            <h3>🍋 2. Iced Lemon Tea: The Acidic Palate Cleanser</h3>
-            Kombinasi antara rasa asam (dari lemon) dan manis (dari teh dan gula) berfungsi sebagai *palate cleanser* yang sangat baik. Keasaman membantu memotong rasa berminyak pada ayam, sementara rasa manis memberikan kontras yang menyegarkan setelah gigitan rempah yang intens.
+        <h3>🍋 2. Iced Lemon Tea: The Acidic Palate Cleanser</h3>
+        Kombinasi antara rasa asam (dari lemon) dan manis (dari teh dan gula) berfungsi sebagai *palate cleanser* yang sangat baik. Keasaman membantu memotong rasa berminyak pada ayam, sementara rasa manis memberikan kontras yang menyegarkan setelah gigitan rempah yang intens.
 
-            <h3>🍊 3. Fresh Orange Juice: Vitamin C Refreshment</h3>
-            Jus jeruk segar memberikan rasa asam yang lembut dan manis alami, kaya akan Vitamin C. Minuman ini menjaga keseimbangan rasa, terutama setelah mengonsumsi makanan yang kaya bumbu dan minyak, mencegah perasaan 'eneg' atau terlalu berat.
+        <h3>🍊 3. Fresh Orange Juice: Vitamin C Refreshment</h3>
+        Jus jeruk segar memberikan rasa asam yang lembut dan manis alami, kaya akan Vitamin C. Minuman ini menjaga keseimbangan rasa, terutama setelah mengonsumsi makanan yang kaya bumbu dan minyak, mencegah perasaan 'eneg' atau terlalu berat.
 
-            <p><strong>Rekomendasi Ahli Kami</strong>: Jika Anda memilih Ayam Geprek Level 5 atau varian *extra spicy* lainnya, <strong>Es Susu Murni Dingin</strong> adalah *pairing* yang direkomendasikan untuk efektivitas penetralan maksimal!</p>
+        <p><strong>Rekomendasi Ahli Kami</strong>: Jika Anda memilih Ayam Geprek Level 5 atau varian *extra spicy* lainnya, <strong>Es Susu Murni Dingin</strong> adalah *pairing* yang direkomendasikan untuk efektivitas penetralan maksimal!</p>
         "
     ],
     [
@@ -153,15 +152,13 @@ $posts = [
         "tanggal" => "10 September 2025",
         "kategori" => "Rahasia Dapur",
         "konten" => "
-            
+        Keistimewaan dan kedalaman rasa pada ayam Goreng Chicken Co. adalah hasil dari bumbu racikan proprietary kami, yang telah melalui fase riset dan pengembangan (*R&D*) bertahun-tahun. Kami bertujuan menciptakan rasa <strong>Umami</strong> yang khas, gurih, dan memiliki lapisan aroma yang kompleks.
 
-            Keistimewaan dan kedalaman rasa pada ayam Goreng Chicken Co. adalah hasil dari bumbu racikan proprietary kami, yang telah melalui fase riset dan pengembangan (*R&D*) bertahun-tahun. Kami bertujuan menciptakan rasa <strong>Umami</strong> yang khas, gurih, dan memiliki lapisan aroma yang kompleks.
+        <h3>🌱 Komposisi Rempah dan Rasio Kritis</h3>
+        Rempah utama (seperti bawang putih, merica, ketumbar, dan jahe) diracik dalam rasio yang sangat presisi. Keseimbangan ini memastikan rasa gurih yang dihasilkan intens tetapi <strong>tidak didominasi oleh satu rempah saja</strong>, memberikan profil rasa yang halus (*subtle*) dan unik.
 
-            <h3>🌱 Komposisi Rempah dan Rasio Kritis</h3>
-            Rempah utama (seperti bawang putih, merica, ketumbar, dan jahe) diracik dalam rasio yang sangat presisi. Keseimbangan ini memastikan rasa gurih yang dihasilkan intens tetapi <strong>tidak didominasi oleh satu rempah saja</strong>, memberikan profil rasa yang halus (*subtle*) dan unik.
-
-            <h3>🧂 Teknik *Deep-Penetration* Marinasi Bertahap</h3>
-            Rasa tidak hanya diaplikasikan pada permukaan, tetapi secara harfiah dimasukkan ke dalam serat daging. Proses marinasi kami memerlukan waktu <strong>minimal 6 jam</strong> untuk memungkinkan rempah dan garam berdifusi penuh ke dalam mioglobin (protein daging). Hal ini menjamin rasa meresap hingga ke tulang, menghasilkan cita rasa yang konsisten dari gigitan pertama hingga terakhir.
+        <h3>🧂 Teknik *Deep-Penetration* Marinasi Bertahap</h3>
+        Rasa tidak hanya diaplikasikan pada permukaan, tetapi secara harfiah dimasukkan ke dalam serat daging. Proses marinasi kami memerlukan waktu <strong>minimal 6 jam</strong> untuk memungkinkan rempah dan garam berdifusi penuh ke dalam mioglobin (protein daging). Hal ini menjamin rasa meresap hingga ke tulang, menghasilkan cita rasa yang konsisten dari gigitan pertama hingga terakhir.
         "
     ],
     [
@@ -171,15 +168,13 @@ $posts = [
         "tanggal" => "2 September 2025",
         "kategori" => "Trend",
         "konten" => "
-            
+        Tahun 2025 diproyeksikan membawa pergeseran signifikan dalam preferensi konsumen ayam goreng. Konsumen semakin mencari <strong>sensasi rasa yang eksplosif</strong> dan tuntutan terhadap kualitas tekstur yang semakin tinggi.
 
-            Tahun 2025 diproyeksikan membawa pergeseran signifikan dalam preferensi konsumen ayam goreng. Konsumen semakin mencari <strong>sensasi rasa yang eksplosif</strong> dan tuntutan terhadap kualitas tekstur yang semakin tinggi.
+        <h3>🔥 Gelombang *Heat Surge* (Rasa Pedas Ekstrem)</h3>
+        Tingkat kepedasan (SHU) telah bertransisi dari sekadar pilihan tambahan menjadi <strong>unsur utama diferensiasi produk</strong>. Brand yang mampu menyajikan level pedas yang otentik dan menantang, dengan tetap menjaga kualitas rasa dasar, akan memimpin pasar. Ini adalah era di mana *Spicy* menjadi *Extra Spicy*.
 
-            <h3>🔥 Gelombang *Heat Surge* (Rasa Pedas Ekstrem)</h3>
-            Tingkat kepedasan (SHU) telah bertransisi dari sekadar pilihan tambahan menjadi <strong>unsur utama diferensiasi produk</strong>. Brand yang mampu menyajikan level pedas yang otentik dan menantang, dengan tetap menjaga kualitas rasa dasar, akan memimpin pasar. Ini adalah era di mana *Spicy* menjadi *Extra Spicy*.
-
-            <h3>🍗 Tekstur *Ultra-Crispy* (Kriwil Tahan Lama)</h3>
-            Tuntutan terhadap kualitas lapisan tepung telah meningkat. Konsumen menginginkan lapisan yang sangat ringan, renyah, dan, yang paling penting, <strong>tahan terhadap kelembapan</strong> (*holding crispiness*)—bahkan setelah melalui proses pengiriman (*delivery*). Inovasi dalam formulasi adonan untuk mencapai tekstur kriwil yang ideal menjadi kunci.
+        <h3>🍗 Tekstur *Ultra-Crispy* (Kriwil Tahan Lama)</h3>
+        Tuntutan terhadap kualitas lapisan tepung telah meningkat. Konsumen menginginkan lapisan yang sangat ringan, renyah, dan, yang paling penting, <strong>tahan terhadap kelembapan</strong> (*holding crispiness*)—bahkan setelah melalui proses pengiriman (*delivery*). Inovasi dalam formulasi adonan untuk mencapai tekstur kriwil yang ideal menjadi kunci.
         "
     ],
     [
@@ -189,25 +184,23 @@ $posts = [
         "tanggal" => "25 Agustus 2025",
         "kategori" => "Promosi",
         "konten" => "
-            
+        Kami dengan bangga meluncurkan program loyalitas eksklusif untuk memberikan penghargaan setinggi-tingginya kepada pelanggan setia: <strong>GC Rewards</strong>. Program ini dirancang untuk meningkatkan *Customer Lifetime Value* (CLV) melalui sistem poin yang transparan dan *reward* yang menarik.
 
-            Kami dengan bangga meluncurkan program loyalitas eksklusif untuk memberikan penghargaan setinggi-tingginya kepada pelanggan setia: <strong>GC Rewards</strong>. Program ini dirancang untuk meningkatkan *Customer Lifetime Value* (CLV) melalui sistem poin yang transparan dan *reward* yang menarik.
+        <h3>🎁 Akumulasi Poin: Mekanisme Reward</h3>
+        Sistem perolehan poin kami dibuat sederhana dan bernilai:
+        <ul>
+            <li><strong>Basis Poin</strong>: Setiap transaksi senilai <strong>Rp10.000</strong> akan mengkonversi menjadi <strong>1 poin</strong> reward.</li>
+            <li><strong>Bonus & Event</strong>: Poin tambahan ditawarkan pada event promosi khusus atau saat peluncuran menu baru.</li>
+        </ul>
 
-            <h3>🎁 Akumulasi Poin: Mekanisme Reward</h3>
-            Sistem perolehan poin kami dibuat sederhana dan bernilai:
-            <ul>
-                <li><strong>Basis Poin</strong>: Setiap transaksi senilai <strong>Rp10.000</strong> akan mengkonversi menjadi <strong>1 poin</strong> reward.</li>
-                <li><strong>Bonus & Event</strong>: Poin tambahan ditawarkan pada event promosi khusus atau saat peluncuran menu baru.</li>
-            </ul>
+        <h3>🍗 Redeem & Benefit: Penukaran Hadiah Premium</h3>
+        Poin dapat ditukarkan dengan produk andalan kami:
+        <ul>
+            <li><strong>30 Poin</strong>: <strong>Ayam Crispy Utuh Gratis</strong> – *Reward* klasik kami.</li>
+            <li><strong>50 Poin</strong>: <strong>Paket Combo Super Eksklusif</strong> – Paket makanan bernilai tinggi.</li>
+        </ul>
 
-            <h3>🍗 Redeem & Benefit: Penukaran Hadiah Premium</h3>
-            Poin dapat ditukarkan dengan produk andalan kami:
-            <ul>
-                <li><strong>30 Poin</strong>: <strong>Ayam Crispy Utuh Gratis</strong> – *Reward* klasik kami.</li>
-                <li><strong>50 Poin</strong>: <strong>Paket Combo Super Eksklusif</strong> – Paket makanan bernilai tinggi.</li>
-            </ul>
-
-            <p>Loyalitas Anda adalah prioritas kami. Semakin sering Anda berinteraksi dengan Goreng Chicken Co., semakin cepat Anda menikmati *reward* eksklusif. Mulailah kumpulkan poin Anda hari ini!</p>
+        <p>Loyalitas Anda adalah prioritas kami. Semakin sering Anda berinteraksi dengan Goreng Chicken Co., semakin cepat Anda menikmati *reward* eksklusif. Mulailah kumpulkan poin Anda hari ini!</p>
         "
     ],
     [
@@ -217,20 +210,18 @@ $posts = [
         "tanggal" => "18 Agustus 2025",
         "kategori" => "Rahasia Dapur",
         "konten" => "
-            
+        Setiap potong ayam yang meninggalkan dapur kami adalah cerminan dari komitmen kami terhadap kualitas tak tertandingi. Kami mengimplementasikan proses <strong>Quality Control (QC) Multi-Tahap</strong> yang ketat untuk memastikan konsistensi dan keamanan pangan.
 
-            Setiap potong ayam yang meninggalkan dapur kami adalah cerminan dari komitmen kami terhadap kualitas tak tertandingi. Kami mengimplementasikan proses <strong>Quality Control (QC) Multi-Tahap</strong> yang ketat untuk memastikan konsistensi dan keamanan pangan.
+        <h3>✅ Kontrol Sumber Bahan Baku (*Sourcing & Freshness*)</h3>
+        Kami menerapkan standar seleksi bahan baku yang sangat tinggi:
+        <ul>
+            <li><strong>Kesegaran Mutlak</strong>: Daging ayam harus diproses dan digunakan dalam waktu <strong>24 jam</strong> sejak penyembelihan.</li>
+            <li><strong>Integritas Daging</strong>: Kami menjamin daging bebas dari penambahan air (glazing) atau bahan kimia pengawet yang dapat mengubah tekstur dan rasa.</li>
+        </ul>
 
-            <h3>✅ Kontrol Sumber Bahan Baku (*Sourcing & Freshness*)</h3>
-            Kami menerapkan standar seleksi bahan baku yang sangat tinggi:
-            <ul>
-                <li><strong>Kesegaran Mutlak</strong>: Daging ayam harus diproses dan digunakan dalam waktu <strong>24 jam</strong> sejak penyembelihan.</li>
-                <li><strong>Integritas Daging</strong>: Kami menjamin daging bebas dari penambahan air (glazing) atau bahan kimia pengawet yang dapat mengubah tekstur dan rasa.</li>
-            </ul>
-
-            <h3>🎯 Konsistensi Operasional dan Cita Rasa</h3>
-            Kunci dari pengalaman waralaba adalah konsistensi rasa di manapun.
-            <p>Semua staf operasional kami menjalani pelatihan ketat berdasarkan SOP memasak standar global. Proses ini menjamin bahwa profil rasa, tingkat kerenyahan, dan kematangan produk <strong>tetap identik</strong> di setiap cabang, dimanapun Anda menikmatinya.</p>
+        <h3>🎯 Konsistensi Operasional dan Cita Rasa</h3>
+        Kunci dari pengalaman waralaba adalah konsistensi rasa di manapun.
+        <p>Semua staf operasional kami menjalani pelatihan ketat berdasarkan SOP memasak standar global. Proses ini menjamin bahwa profil rasa, tingkat kerenyahan, dan kematangan produk <strong>tetap identik</strong> di setiap cabang, dimanapun Anda menikmatinya.</p>
         "
     ],
     [
@@ -240,14 +231,11 @@ $posts = [
         "tanggal" => "10 Agustus 2025",
         "kategori" => "Event",
         "konten" => "
-            
+        Dalam upaya inovasi menu musiman, Goreng Chicken Co. dengan bangga mengumumkan kolaborasi gastronomi spesial dengan brand saus keju viral terkemuka untuk menciptakan <strong>Cheese Melt Chicken Burger (Limited Edition)</strong>.
 
-            Dalam upaya inovasi menu musiman, Goreng Chicken Co. dengan bangga mengumumkan kolaborasi gastronomi spesial dengan brand saus keju viral terkemuka untuk menciptakan <strong>Cheese Melt Chicken Burger (Limited Edition)</strong>.
-
-            <p>Menu ini menyatukan dua kekuatan kuliner: ayam crispy andalan kami yang legendaris, dipadukan dengan lelehan saus keju *creamy* yang kaya rasa dan otentik. Perpaduan kontras tekstur garing dengan keju lembut menghasilkan pengalaman <strong>'Crunch and Melt'</strong> yang adiktif, menjadikannya favorit instan di kalangan pelanggan muda.</p>
+        <p>Menu ini menyatukan dua kekuatan kuliner: ayam crispy andalan kami yang legendaris, dipadukan dengan lelehan saus keju *creamy* yang kaya rasa dan otentik. Perpaduan kontras tekstur garing dengan keju lembut menghasilkan pengalaman <strong>'Crunch and Melt'</strong> yang adiktif, menjadikannya favorit instan di kalangan pelanggan muda.</p>
         "
-    ],
-
+    ]
 ];
 
 // 1. Cari artikel yang dipilih berdasarkan ID dari URL
@@ -594,3 +582,43 @@ body.has-fixed-navbar { padding-top: 70px; }
         });
     });
 </script>
+<style>
+/* --- Styling artikel blog agar rapi dan mudah dibaca --- */
+.blog-detail .content {
+    text-align: justify;                  /* Rata kiri-kanan */
+    text-justify: inter-word;             /* Rata antar kata */
+    line-height: 1.9;                     /* Spasi antar baris */
+    font-size: 1.05rem;
+    color: #444;
+}
+
+/* Heading di dalam konten artikel */
+.blog-detail .content h3 {
+    margin-top: 1.8rem;
+    margin-bottom: 0.8rem;
+    font-weight: 700;
+    color: #333;
+}
+
+/* Paragraf dan daftar */
+.blog-detail .content p {
+    margin-bottom: 1rem;
+}
+
+/* Bullet list & numbering */
+.blog-detail .content ul,
+.blog-detail .content ol {
+    margin-left: 2rem;
+    margin-bottom: 1rem;
+}
+
+.blog-detail .content li {
+    margin-bottom: 0.4rem;
+    text-align: justify;
+}
+
+/* Emoji heading biar sejajar rapi */
+.blog-detail .content h3::before {
+    margin-right: 6px;
+}
+</style>
